@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import "./styles.css"
+import {AddTask} from '.././AddTask/AddTask';
 
-export const Task = ({ props }) => {
+export const Task = () => {
     const [task, setTask] = useState([
         {
             id: 1,
@@ -30,6 +31,15 @@ export const Task = ({ props }) => {
         }
     ]);
 
+    const newTask = (taskTitle) => {
+        setTask([...task, {
+            id: Math.random(20),
+            title: taskTitle,
+            completed: false,
+        }])
+    }
+
+
     return (
         <div >
             {task.map(task => (
@@ -37,6 +47,8 @@ export const Task = ({ props }) => {
                     {task.title} {task.completed}
                 </div>
             ))}
+
+            <AddTask props = {newTask}/>
         </div>
     )
 }
