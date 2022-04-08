@@ -11,6 +11,7 @@ export const AddTask = ({props}) => {
 
     const handleNewTask = () => {
         props(data)
+        setData('')
     }
 
     return (

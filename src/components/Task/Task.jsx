@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "./styles.css"
-import {AddTask} from '.././AddTask/AddTask';
+import { AddTask } from '.././AddTask/AddTask';
+import { v4 as uuidv4 } from 'uuid';
 
 export const Task = () => {
     const [task, setTask] = useState([
@@ -17,7 +18,7 @@ export const Task = () => {
         {
             id: 3,
             title: "Iniciar estudos do Ignite Lab",
-            completed: true,
+            completed: false,
         },
         {
             id: 4,
@@ -33,22 +34,37 @@ export const Task = () => {
 
     const newTask = (taskTitle) => {
         setTask([...task, {
-            id: Math.random(20),
+            id: uuidv4(),
             title: taskTitle,
             completed: false,
         }])
     }
 
+    console.log(task)
+
+    //console.log(task[1].completed)
+
+    const handleCompleted = (taskId) => {
+        const newTask = task.map(task => {
+            if(task.id === taskId){
+                return { ...task, completed: !task.completed }
+            }
+            return task;
+        })
+
+        setTask(newTask)
+    } 
+
 
     return (
         <div >
             {task.map(task => (
-                <div key={task.id} className="task-container">
+                <div key={task.id} className="task-container" onClick={() => handleCompleted(task.id)} style={task.completed ? { borderLeft: '6px solid chartreuse' } : {}}>
                     {task.title} {task.completed}
                 </div>
             ))}
 
-            <AddTask props = {newTask}/>
+            <AddTask props={newTask} />
         </div>
     )
 }
