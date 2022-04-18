@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import "./styles.css"
 import { AddTask } from '.././AddTask/AddTask';
 import { InfoTask } from '.././InfoTask/InfoTask';
@@ -10,10 +11,10 @@ export const Task = () => {
     const [task, setTask] = useState([
         {
             id: 1,
-            title: "Ver a plataforma do Skore",
+            title: "",
             completed: false,
         },
-        {
+        /*{
             id: 2,
             title: "Cursos Alura",
             completed: false,
@@ -32,8 +33,17 @@ export const Task = () => {
             id: 5,
             title: "Exercício do Claudino",
             completed: false,
-        }
+        }*/
     ]);
+
+    useEffect(() => {
+        const reqTasks = async () => {
+            const response = await axios.get('https://jsonplaceholder.cypress.io/todos?_limit=10');
+            console.log(response.data);
+            setTask(response.data);
+        }
+        reqTasks();
+    }, [])
 
     const newTask = (taskTitle) => {
         setTask([...task,{

@@ -1,4 +1,25 @@
 .section-info{
-    background-color: red;
-    height: 100vh;
+    background-color: #444;
+    margin: 15px 0;
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: column;
+    color: #eee;
+    border-radius: 5px;
+}
+
+h2{
+    margin-bottom: 5px;
+    color: chartreuse;
+    background-color: #444;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+p {
+    width: 90%;
+    text-align: justify;
+    margin: 10px 0 0 20px;
+    background-color: #444;
 }
