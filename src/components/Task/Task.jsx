@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import "./styles.css"
 import { AddTask } from '.././AddTask/AddTask';
+import { InfoTask } from '.././InfoTask/InfoTask';
 import { v4 as uuidv4 } from 'uuid';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+
 
 export const Task = () => {
     const [task, setTask] = useState([
         {
             id: 1,
-            title: "Ver a plataforma do Skore.",
+            title: "Ver a plataforma do Skore",
             completed: false,
         },
         {
@@ -33,38 +36,54 @@ export const Task = () => {
     ]);
 
     const newTask = (taskTitle) => {
-        setTask([...task, {
+        setTask([...task,{
             id: uuidv4(),
             title: taskTitle,
             completed: false,
         }])
     }
 
-    console.log(task)
-
-    //console.log(task[1].completed)
 
     const handleCompleted = (taskId) => {
         const newTask = task.map(task => {
-            if(task.id === taskId){
+            if (task.id === taskId) {
                 return { ...task, completed: !task.completed }
             }
             return task;
         })
-
         setTask(newTask)
-    } 
+    }
+
+    const handleDelete = (taskId) => {
+        const newTask = task.filter(task => task.id !== taskId)
+        setTask(newTask)
+    }
 
 
     return (
         <div >
             {task.map(task => (
-                <div key={task.id} className="task-container" onClick={() => handleCompleted(task.id)} style={task.completed ? { borderLeft: '6px solid chartreuse' } : {}}>
-                    {task.title} {task.completed}
-                </div>
+                <>
+                    <div key={task.id}>
+                        <div className="task-container" style={task.completed ? { borderLeft: '6px solid chartreuse' } : {}}>
+                            <div className="task-title" onClick={() => handleCompleted(task.id)}>
+                                {task.title}
+                            </div>
+                            <button className="remove-task-button" onClick={() => handleDelete(task.id)} > X</button>
+                            
+                            <Link
+                                to={{
+                                    pathname: "/infoTask",
+                                    search: `${task.title}`,
+                                }}
+                                
+                            > <div className="remove-task-button" >!</div> </Link>
+                        </div>
+                    </div>
+                </>
             ))}
+            <AddTask props = {newTask} />
 
-            <AddTask props={newTask} />
         </div>
     )
 }
