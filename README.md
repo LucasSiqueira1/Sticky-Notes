@@ -1,3 +1,3 @@
 # App de sticky notes
-visando um controle de tarefas!
+Desenvolvido em React, utilizando axios, visando um controle de tarefas!
 
